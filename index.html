@@ -47,6 +47,7 @@
             <li><a href="#projects">作品</a></li>
             <li><a href="#skills">技能</a></li>
             <li><a href="#experience">經歷</a></li>
+            <li><a href="#dog">隨機狗狗</a></li>
             <li><a href="#footer">聯絡</a></li>
           </ul>
         </nav>
@@ -306,6 +307,51 @@
               <a class="blog-link" href="#">Read more</a>
             </li>
           </ul>
+        </div>
+      </section>
+
+      <!-- API Demo — Random Dog -->
+      <section id="dog" class="section section-dog">
+        <div class="container">
+          <header class="section-header reveal">
+            <span class="label">API Demo</span>
+            <h2 class="section-title">
+              隨機<br /><em>狗狗</em>
+            </h2>
+            <p class="section-lead">
+              點擊按鈕，從 Dog CEO API 取得一張隨機狗狗圖片。
+            </p>
+          </header>
+
+          <div class="dog-panel reveal">
+            <div class="dog-display" id="dog-display" aria-live="polite">
+              <div class="dog-placeholder" id="dog-placeholder">
+                <span class="dog-placeholder-label">IMAGE</span>
+                <p>按下按鈕，看看今天遇到哪隻狗狗</p>
+              </div>
+              <div class="dog-loading" id="dog-loading" hidden>
+                <span class="dog-spinner" aria-hidden="true"></span>
+                <p>Loading…</p>
+              </div>
+              <img
+                class="dog-image"
+                id="dog-image"
+                alt=""
+                hidden
+              />
+            </div>
+
+            <div class="dog-actions">
+              <button
+                type="button"
+                class="btn btn-primary"
+                id="dog-btn"
+              >
+                隨機狗狗
+              </button>
+              <p class="dog-error" id="dog-error" hidden role="alert"></p>
+            </div>
+          </div>
         </div>
       </section>
     </main>

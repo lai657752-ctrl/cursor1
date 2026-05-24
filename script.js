@@ -182,6 +182,83 @@
     }
   }
 
+  function initRandomDog() {
+    const DOG_API = "https://dog.ceo/api/breeds/image/random";
+    const btn = document.getElementById("dog-btn");
+    const image = document.getElementById("dog-image");
+    const placeholder = document.getElementById("dog-placeholder");
+    const loading = document.getElementById("dog-loading");
+    const errorEl = document.getElementById("dog-error");
+
+    if (!btn || !image || !placeholder || !loading || !errorEl) return;
+
+    function showPlaceholder() {
+      placeholder.hidden = false;
+      loading.hidden = true;
+      image.hidden = true;
+      image.removeAttribute("src");
+    }
+
+    function showLoading() {
+      placeholder.hidden = true;
+      loading.hidden = false;
+      image.hidden = true;
+      errorEl.hidden = true;
+      errorEl.textContent = "";
+      btn.disabled = true;
+    }
+
+    function showImage(src) {
+      placeholder.hidden = true;
+      loading.hidden = true;
+      image.hidden = false;
+      image.src = src;
+      btn.disabled = false;
+    }
+
+    function showError(message) {
+      loading.hidden = true;
+      btn.disabled = false;
+      errorEl.hidden = false;
+      errorEl.textContent = message;
+      if (!image.src) {
+        placeholder.hidden = false;
+      }
+    }
+
+    image.addEventListener("load", function () {
+      loading.hidden = true;
+      image.hidden = false;
+      btn.disabled = false;
+    });
+
+    image.addEventListener("error", function () {
+      showError("圖片載入失敗，請再試一次。");
+    });
+
+    btn.addEventListener("click", function () {
+      showLoading();
+
+      fetch(DOG_API)
+        .then(function (res) {
+          if (!res.ok) {
+            throw new Error("API 請求失敗");
+          }
+          return res.json();
+        })
+        .then(function (data) {
+          if (data.status !== "success" || !data.message) {
+            throw new Error("無法取得狗狗圖片");
+          }
+          image.alt = "隨機狗狗照片";
+          image.src = data.message;
+        })
+        .catch(function () {
+          showError("無法連線到 API，請稍後再試。");
+        });
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     initTheme();
     if (themeToggle) {
@@ -192,5 +269,6 @@
     initReveal();
     initDragScroll();
     initYear();
+    initRandomDog();
   });
 })();
